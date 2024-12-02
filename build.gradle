@@ -1,0 +1,9 @@
+buildscript {
+    repositories {
+        google()
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:8.1.2' // Gradle 8.7과 호환되는 최신 AGP
+    }
+}
