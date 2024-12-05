@@ -15,7 +15,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import com.example.smartring.R
+import com.smtlink.transferprotocoldemo.R
 
 @Composable
 fun FeatureList(navController: NavController, modifier: Modifier = Modifier) {

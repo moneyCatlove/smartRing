@@ -14,7 +14,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import com.example.smartring.R
+import com.smtlink.transferprotocoldemo.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

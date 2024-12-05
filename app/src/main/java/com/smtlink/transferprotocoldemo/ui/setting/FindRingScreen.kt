@@ -16,13 +16,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.core.app.ActivityCompat
 import androidx.navigation.NavController
-import com.example.smartring.ble.BLEManager
 
 @Composable
 fun FindRingScreen(
     navController: NavController,
-    context: Context,
-    bleManager: BLEManager // BLEManager를 전달받아 사용
+    context: Context  // BLEManager를 전달받아 사용
 ) {
     var isScanning by remember { mutableStateOf(false) }
     var foundDevices by remember { mutableStateOf(listOf<BluetoothDevice>()) }

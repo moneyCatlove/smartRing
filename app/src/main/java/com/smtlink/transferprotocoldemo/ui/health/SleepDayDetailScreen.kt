@@ -16,10 +16,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.navigation.NavController
-import com.example.smartring.R
-import com.example.smartring.controller.DailySleepStateController
-import com.example.smartring.model.DailySleepModel
-import com.example.smartring.model.DailySleepStateModel
+import com.smtlink.transferprotocoldemo.R
 import com.github.mikephil.charting.charts.LineChart
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.Entry

@@ -33,6 +33,8 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemChildClickListener;
 import com.smtlink.transferprotocoldemo.scannerble.BLEDeviceInfo;
 import com.smtlink.transferprotocoldemo.scannerble.ScanningActivity;
+import com.smtlink.transferprotocoldemo.ui.controller.OxygenData;
+import com.smtlink.transferprotocoldemo.ui.controller.SleepData;
 import com.smtlink.transferprotocolsdk.Protocols;
 import com.smtlink.transferprotocolsdk.bean.AlarmInfo;
 import com.smtlink.transferprotocolsdk.bean.ContactsInfo;
@@ -108,6 +110,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             else setState(false, Color.BLACK, "扫描");
         }
     }
+
+
+
 
     private void initView() {
         mMacAddress = (TextView) findViewById(R.id.macAddress);
@@ -617,18 +622,90 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         handler.sendEmptyMessageDelayed(MSG_DISCONNECT, 500);
     }
 
+    //SLEEP
+    //SleepData
+    //SleepData
     @Override
     public void jsonObjectData(final String cmdKey, final JSONObject jsonObject) {
-        Log.i("gy", "cmdKey: " + cmdKey + ", jsonString: " + jsonObject.toString());
-        JsonInfo jsonInfo = new JsonInfo();
-        jsonInfo.cmdKey = cmdKey;
-        jsonInfo.jsonObject = jsonObject;
-        Message msg = Message.obtain();
-        msg.what = MSG_JSON_DATA;
-        msg.obj = jsonInfo;
-        handler.sendMessageDelayed(msg, 500);
-        //get,set,send等回调在子线程队列中进行,不直接更新UI
+        switch (cmdKey) {
+            case Protocols.GET12:
+                handleSleepData(jsonObject); // 매일 수면 데이터 처리
+                break;
+            case Protocols.GET13:
+                handleSleepStateData(jsonObject); // 특정 시간대의 수면 상태 데이터 처리
+                break;
+            case Protocols.GET23:
+                handleOxygenData(jsonObject); // 혈중 산소 데이터 처리
+                break;
+            default:
+                Log.w("cmdKey", "Unhandled cmdKey: " + cmdKey);
+        }
     }
+
+    // 특정 시간대의 수면 상태 데이터를 처리하는 메서드 추가
+    private void handleSleepStateData(final JSONObject jsonObject) {
+        try {
+            // SleepStateController에 데이터 전달
+            SleepState.processSleepStateData(jsonObject);
+
+            // UI 업데이트
+            runOnUiThread(() -> {
+                mTransferData.setText("특정 시간대의 수면 상태 데이터 업데이트 완료");
+                Toast.makeText(MainActivity.this, "수면 상태 데이터 처리 완료!", Toast.LENGTH_SHORT).show();
+            });
+        } catch (Exception e) {
+            Log.e("handleSleepStateData", "Error processing sleep state data: " + e.getMessage(), e);
+        }
+    }
+
+
+    // 혈중 산소 데이터 처리
+    private void handleOxygenData(final JSONObject jsonObject) {
+        try {
+            // JSON 데이터를 OxygenData로 변환
+            OxygenData oxygenData = new OxygenData(
+                    jsonObject.optInt("oxygen_level", 0), // 산소 수치
+                    jsonObject.optString("time", "unknown"), // 시간
+                    jsonObject.optString("date", "unknown") // 날짜
+            );
+
+            Log.i("OxygenData", oxygenData.toString());
+
+            // UI 업데이트
+            runOnUiThread(() -> {
+                mTransferData.setText(oxygenData.toString());
+                Toast.makeText(MainActivity.this, "혈중 산소 데이터 업데이트 완료", Toast.LENGTH_SHORT).show();
+            });
+        } catch (Exception e) {
+            Log.e("handleOxygenData", "Oxygen data processing error: " + e.getMessage(), e);
+        }
+    }
+
+    // sleep 데이터 처리하는 핸들러
+    private void handleSleepData(final JSONObject jsonObject) {
+        try {
+            SleepData sleepData = new SleepData(
+                    jsonObject.optInt("total_sleep_minutes", 0),
+                    jsonObject.optInt("deep_sleep_minutes", 0),
+                    jsonObject.optInt("light_sleep_minutes", 0),
+                    jsonObject.optString("date", "unknown")
+            );
+
+            Log.i("SleepData", sleepData.toString());
+
+            // UI 업데이트
+            runOnUiThread(() -> {
+                mTransferData.setText(sleepData.toString());
+                Toast.makeText(MainActivity.this, "수면 데이터 업데이트 완료", Toast.LENGTH_SHORT).show();
+            });
+        } catch (Exception e) {
+            Log.e("gy", "Sleep data processing error: " + e.getMessage(), e);
+        }
+    }
+
+
+
+
 
     @SuppressLint("SetTextI18n")
     @Override

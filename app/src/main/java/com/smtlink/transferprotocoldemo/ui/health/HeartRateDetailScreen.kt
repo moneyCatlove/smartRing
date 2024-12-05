@@ -18,10 +18,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.navigation.NavController
-import com.example.smartring.MainApplication
-import com.example.smartring.R
-import com.example.smartring.controller.HeartBeatController
-import com.example.smartring.model.HeartRateResponseModel
+import com.smtlink.transferprotocoldemo.R
 import com.github.mikephil.charting.charts.LineChart
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData

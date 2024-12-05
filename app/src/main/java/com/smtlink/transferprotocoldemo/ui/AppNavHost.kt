@@ -11,11 +11,6 @@ import androidx.navigation.compose.composable
 import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
-import com.example.smartring.MainApplication
-import com.example.smartring.ble.BLEManager
-import com.example.smartring.controller.DailySleepStateController
-import com.example.smartring.controller.HeartBeatController
-import com.example.smartring.controller.TopBarController
 import com.example.smartring.ui.theme.components.BottomNavigationBar
 import com.example.smartring.ui.theme.components.TopBar
 import com.example.smartring.ui.theme.healthcare.*
@@ -25,7 +20,6 @@ import com.example.smartring.ui.theme.setting.*
 @Composable
 fun AppNavHost(
     navController: NavController = rememberNavController(), // NavController 기본값
-    bleManager: BLEManager // BLEManager를 외부에서 전달받음
 ) {
     Scaffold(
         topBar = { TopBar(TopBarController()) },

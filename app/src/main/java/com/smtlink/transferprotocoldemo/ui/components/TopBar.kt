@@ -16,7 +16,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.smartring.MainApplication
-import com.example.smartring.R
+import com.smtlink.transferprotocoldemo.R
 import com.example.smartring.controller.TopBarController
 import com.example.smartring.model.DeviceDataModel
 
